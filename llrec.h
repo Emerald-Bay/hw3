@@ -1,6 +1,7 @@
 #ifndef LLREC_H
 #define LLREC_H
 #include <cstdlib>
+#include <iostream>
 
 /**
  * Node struct for both problems
@@ -45,7 +46,8 @@ struct Node
  *   Pivot value
  *
  */
-void llpivot(Node *&head, Node *&smaller, Node *&larger, int pivot);
+void llpivot(Node *& head, Node *& smaller, Node *& larger, int pivot);
+void llpivot_helper(Node *& head, Node *& smaller, Node *& larger, int pivot);
 
 /**
  * Given a linked list pointed to by head, removes (filters out) nodes
@@ -69,6 +71,8 @@ void llpivot(Node *&head, Node *&smaller, Node *&larger, int pivot);
  */
 template <typename Comp>
 Node* llfilter(Node* head, Comp pred);
+template <typename Comp>
+void llfilter_helper(Node* root, Node* child, Comp pred);
 
 //*****************************************************************************
 // Since template implementations should be in a header file, we will
@@ -81,8 +85,30 @@ Node* llfilter(Node* head, Comp pred)
     //*********************************************
     // Provide your implementation below
     //*********************************************
+    if (head == nullptr) {
+        return head;
+    }
+    Node* temp = head->next;
+    if (pred(head)) {
+        delete head;
+        return llfilter(temp, pred);
+    }
+    else llfilter_helper(head, temp, pred);
+    return head;
+}
 
-
+template <typename Comp>
+void llfilter_helper(Node* root, Node* child, Comp pred) {
+    if (child == nullptr) {
+        return;
+    }
+    Node* temp = child->next;
+    if (pred(child)) {
+        delete child;
+        root->next = temp;
+        llfilter_helper(root, temp, pred);
+    }
+    else llfilter_helper(child, child->next, pred);
 }
 
 #endif

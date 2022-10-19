@@ -87,8 +87,32 @@ int main(int argc, char* argv[])
 
     // Test out your linked list code
 
+    /* Test for llpivot
+    Node* smaller = nullptr;
+    Node* larger = nullptr;
 
+    llpivot(head, smaller, larger, 5);
 
+    print(head);
+    print(smaller);
+    print(larger);
+    */
+
+    class evenCheck {
+        public:
+        bool operator () (Node* node) {
+            return node->val % 2;
+        }
+    };
+
+    head = llfilter(head, evenCheck());
+
+    if (head != nullptr) {
+        cout << head << " " << head->val << "\n";
+
+        print(head);
+    }
+    else cout << "Head is a nullptr, filtered all elements..." << endl;
     
     return 0;
 
