@@ -2,6 +2,8 @@
 #define HEAP_H
 #include <functional>
 #include <stdexcept>
+#include <vector>
+#include <iostream>
 
 template <typename T, typename PComparator = std::less<T> >
 class Heap
@@ -61,13 +63,40 @@ public:
 
 private:
   /// Add whatever helper functions and data members you need below
-
-
-
-
+  std::vector<T> vect;
+  int leafCount;
+  PComparator comp;
 };
 
 // Add implementation of member functions here
+template <typename T, typename PComparator>
+Heap<T,PComparator>::Heap(int m, PComparator c) : leafCount(m), comp(c) {
+
+}
+
+template <typename T, typename PComparator>
+Heap<T,PComparator>::~Heap() {
+
+}
+
+template <typename T, typename PComparator>
+void Heap<T,PComparator>::push(const T& item) {
+  this->vect.push_back(item);
+  std::size_t index = vect.size() - 1;
+  std::size_t parent;
+
+  while (index != 0) {
+    parent = (index - 1) / 2;
+
+    if (this->comp(this->vect[index], this->vect[parent])) {
+      std::swap(this->vect[index], this->vect[parent]);
+      index = parent;
+    }
+    else {
+      break;
+    }
+  }
+}
 
 
 // We will start top() for you to handle the case of 
@@ -81,14 +110,11 @@ T const & Heap<T,PComparator>::top() const
     // ================================
     // throw the appropriate exception
     // ================================
-
-
+    throw std::underflow_error("Heap is empty - top()");
   }
   // If we get here we know the heap has at least 1 item
   // Add code to return the top element
-
-
-
+  return vect[0];
 }
 
 
@@ -101,12 +127,60 @@ void Heap<T,PComparator>::pop()
     // ================================
     // throw the appropriate exception
     // ================================
-
-
+    throw std::underflow_error("Heap is empty - pop()");
   }
 
+  this->vect[0] = this->vect[this->vect.size() - 1];
+  this->vect.pop_back();
 
+  size_t parent = 0;
+  size_t child;
+  size_t it;
+  bool bottomOfTreeFlag = true;
 
+  while (((parent * 2) + leafCount) < this->size()) {
+    child = (parent * 2) + 1;
+    it = child + 1;
+
+    for (int i = 0; i < leafCount; ++i) {
+      if (this->comp(this->vect[it + i], this->vect[child])) {
+        child = it + i;
+      }
+    }
+
+    if (this->comp(this->vect[child], this->vect[parent])) {
+      std::swap(this->vect[parent], this->vect[child]);
+      parent = child;
+    }
+    else {
+      bottomOfTreeFlag = false;
+      break;
+    }
+  }
+
+  if (bottomOfTreeFlag && ((parent * 2) + 1) < this->vect.size()) {
+    child = (parent * 2) + 1;
+
+    for (it = child + 1; it < this->vect.size(); ++it) {
+      if (this->comp(this->vect[it], this->vect[child])) {
+        child = it;
+      }
+    }
+
+    if (this->comp(this->vect[child], this->vect[parent])) {
+      std::swap(this->vect[parent], this->vect[child]);
+    }
+  }
+}
+
+template <typename T, typename PComparator>
+bool Heap<T, PComparator>::empty() const {
+  return (this->size() == 0);
+}
+
+template <typename T, typename PComparator>
+size_t Heap<T, PComparator>::size() const {
+  return this->vect.size();
 }
 
 
