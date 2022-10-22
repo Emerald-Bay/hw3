@@ -97,6 +97,7 @@ Event* NotGate::update(uint64_t current_time) {
 	char input = this->m_inputs[0]->getState();
 	Event* e = nullptr;
 	
+	// Inverse value of input wire
 	if (input == '1') {
 		input = '0';
 	}
@@ -104,6 +105,7 @@ Event* NotGate::update(uint64_t current_time) {
 		input = '1';
 	}
 
+	//If value needs to be updated
 	if (input != this->m_current_state) {
 		this->m_current_state = input;
 		uint64_t next = current_time + this->m_delay;

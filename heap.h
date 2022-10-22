@@ -84,6 +84,7 @@ void Heap<T,PComparator>::push(const T& item) {
   std::size_t index = vect.size() - 1;
   std::size_t parent;
 
+  // Continues to trickle up tree until parent is better or reaches highest node
   while (index != 0) {
     parent = (index - 1) / 2;
 
@@ -137,6 +138,7 @@ void Heap<T,PComparator>::pop()
   size_t it;
   bool bottomOfTreeFlag = true;
 
+  // Continues to trickle down if the best child node is better than it
   while (((parent * 2) + leafCount) < this->size()) {
     child = (parent * 2) + 1;
     it = child + 1;
@@ -157,6 +159,8 @@ void Heap<T,PComparator>::pop()
     }
   }
 
+  // If at the bottom of the tree, unknown number of child nodes,
+  // need to be careful not to reference outside of vector
   if (bottomOfTreeFlag && ((parent * 2) + 1) < this->vect.size()) {
     child = (parent * 2) + 1;
 
@@ -182,7 +186,4 @@ size_t Heap<T, PComparator>::size() const {
   return this->vect.size();
 }
 
-
-
 #endif
-

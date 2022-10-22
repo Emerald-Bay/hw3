@@ -3,7 +3,6 @@
 
 #include <vector>
 #include <stdexcept>
-#include <iostream>
 
 template <typename T>
 class Stack : private std::vector<T> {
@@ -19,8 +18,8 @@ public:
     const T& top() const; // throws std::underflow_error if empty
 };
 
-// Defined all member functions in the header file as they all require
-// the templated type T
+// Defined all member functions in the header file
+// as they all require the templated type T
 
 template <typename T>
 Stack<T>::Stack() {
