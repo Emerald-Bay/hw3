@@ -3,7 +3,6 @@
 #include <functional>
 #include <stdexcept>
 #include <vector>
-#include <iostream>
 
 template <typename T, typename PComparator = std::less<T> >
 class Heap
