@@ -6,13 +6,13 @@
 
 void llpivot(Node *& head, Node *& smaller, Node *& larger, int pivot)
 {
+  smaller = nullptr;
+  larger = nullptr;
+
   //Empty linked list
   if (head == nullptr) {
     return;
   }
-  
-  smaller = nullptr;
-  larger = nullptr;
 
   //Value is less than/equal to pivot
   if (head->val <= pivot) {
