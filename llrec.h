@@ -89,7 +89,7 @@ Node* llfilter(Node* head, Comp pred)
         return head;
     }
     Node* temp = head->next;
-    if (pred(head->val)) {
+    if (pred(head)) {
         delete head;
         return llfilter(temp, pred);
     }
@@ -103,7 +103,7 @@ void llfilter_helper(Node* root, Node* child, Comp pred) {
         return;
     }
     Node* temp = child->next;
-    if (pred(child->val)) {
+    if (pred(child)) {
         delete child;
         root->next = temp;
         llfilter_helper(root, temp, pred);
