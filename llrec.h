@@ -47,6 +47,7 @@ struct Node
  *
  */
 void llpivot(Node *& head, Node *& smaller, Node *& larger, int pivot);
+void llpivot_helper(Node *& head, Node *& smaller, Node *& larger, int pivot);
 
 /**
  * Given a linked list pointed to by head, removes (filters out) nodes
