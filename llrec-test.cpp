@@ -87,21 +87,24 @@ int main(int argc, char* argv[])
 
     // Test out your linked list code
 
-    /* Test for llpivot
+    // Test for llpivot
     Node* smaller = nullptr;
     Node* larger = nullptr;
 
     llpivot(head, smaller, larger, 5);
 
     print(head);
+    if (head == nullptr) {
+        std::cout << "Head is a nullptr :)\n";
+    }
     print(smaller);
     print(larger);
-    */
+    
 
     class evenCheck {
         public:
-        bool operator () (Node* node) {
-            return node->val % 2;
+        bool operator () (int val) {
+            return val % 2;
         }
     };
 
